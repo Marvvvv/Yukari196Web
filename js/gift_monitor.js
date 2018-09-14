@@ -19,9 +19,17 @@ $(function(){
         socket.onmessage = function (event) {
             var data = JSON.parse(event.data);
             console.log(data);
-            var giftSrc = "https://staticlive.douyucdn.cn/storage/webpic_resources/upload/dygift/1707/86d2b8b0084c7cc60311779a79b76b0b.gif";   // 暂时写死
-            var date = new Date(parseInt(data.date));
-            var time = date.format("yyyy-MM-dd hh:mm:ss");
+            var giftSrc = data.gift_src;
+
+            var img = "";
+            if (giftSrc == null  || giftSrc =="") {
+                img = '<td style="text-align: center"><img height="30px"></td>';
+            } else {
+                img = '<td style="text-align: center"><img height="30px" src="'+ giftSrc +'"></td>';
+            }
+
+            /*var date = new Date(parseInt(data.date));
+            var time = date.format("yyyy-MM-dd hh:mm:ss");*/
             var text = "";
             var cls = "time" + guid();
             if (data.radioType == 1) {
@@ -30,8 +38,8 @@ $(function(){
                 text = '<td><span>'+ data.giveName +' 在 <b style="color: red;">'+ data.achorName +'</b> 的直播间开通了 '+ data.gift_name +'</span></td> \n';
             }
             var element = '<tr>\n' +
-                '                                <td style="text-align: center"><img height="30px" src="'+ giftSrc +'"></td>\n' +
-                '                                <td>'+ time +'</td>\n' +
+                img +
+                '                                <td>'+ data.date +'</td>\n' +
                 text +
                 '                                <td>剩余<span onclick="countDownStart(this)" class="'+ cls +'">179</span></td>\n' +
                 '                                <td><a onclick="gotoRoom('+ data.roomId +',this);" target="_blank" class="btn btn-block btn-primary btn-flat" style="width: 50%;">冲鸭</button></td>\n' +
@@ -71,10 +79,18 @@ function getNotOverYetGift() {
 }
 
 function createGiftRadio(data) {
-    var giftSrc = "https://staticlive.douyucdn.cn/storage/webpic_resources/upload/dygift/1707/86d2b8b0084c7cc60311779a79b76b0b.gif";
 
     for (let i = 0; i < data.length; i++) {
         var obj = data[i];
+        var giftSrc = obj.gift_src;
+
+        var img = "";
+        if (giftSrc == null  || giftSrc =="") {
+            img = '<td style="text-align: center"><img height="30px"></td>';
+        } else {
+            img = '<td style="text-align: center"><img height="30px" src="'+ giftSrc +'"></td>';
+        }
+
         var text = "";
         var cls = "time" + guid();
         if (obj.radioType == 1) {
@@ -83,7 +99,7 @@ function createGiftRadio(data) {
             text = '<td><span>'+ obj.giveName +' 在 <b style="color: red;">'+ obj.achorName +'</b> 的直播间开通了 '+ obj.gift_name +'</span></td> \n';
         }
         var element = '<tr>\n' +
-            '                                <td style="text-align: center"><img height="30px" src="'+ giftSrc +'"></td>\n' +
+            img +
             '                                <td>'+ obj.date +'</td>\n' +
             text +
             '                                <td>剩余<span onclick="initCountDown(this,'+ obj.remainTime +')" class="'+ cls +'"></span></td>\n' +
