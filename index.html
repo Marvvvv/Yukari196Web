@@ -2,7 +2,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Starter</title>
+    <title>DASHBOARD  |  -- YUKARI</title>
 
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
@@ -25,7 +25,7 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     <style>
-        .query_bullet{
+        .query_bullet {
             cursor: pointer;
         }
         .gotoRoomSpan {
@@ -40,17 +40,12 @@
 
     <!-- 顶部 -->
     <header class="main-header">
-        <!-- Logo -->
         <a href="#" class="logo">
-            <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>196</b></span>
-            <!-- logo for regular state and mobile devices -->
             <span class="logo-lg"><b>YUKARI</b></span>
         </a>
 
-        <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
-            <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
             </a>
@@ -63,8 +58,9 @@
         <section class="sidebar">
             <ul class="sidebar-menu">
                 <li class="header">Selection</li>
-                <li><a href="query_bullet.html"><i class="fa fa-gg"></i> <span>弹幕查询</span></a></li>
-                <li><a href="query_shutup.html"><i class="fa fa-gg"></i> <span>禁言查询</span></a></li>
+                <li class="active"><a href="#"><i class="fa fa-gg"></i> <span>DASHBOARD</span></a></li>
+                <!--<li><a href="query_bullet.html"><i class="fa fa-gg"></i> <span>弹幕查询</span></a></li>
+                <li><a href="query_shutup.html"><i class="fa fa-gg"></i> <span>禁言查询</span></a></li>-->
                 <li><a href="gift_monitor.html"><i class="fa fa-gg"></i> <span>礼物监控</span></a></li>
             </ul>
         </section>
@@ -83,12 +79,7 @@
             </ol>
         </section>
 
-        <!-- Main Content -->
         <section class="content container-fluid">
-
-            <!--------------------------
-              | Your Page Content Here |
-              -------------------------->
 
             <div class="col-md-6">
 
@@ -98,22 +89,12 @@
                         <h3 class="box-title">开播信息</h3>
                     </div>
                     <div class="box box-widget widget-user-2">
-                        <div class="widget-user-header bg-yellow">
-                            <div class="widget-user-image">
-                                <img class="img-circle" src="https://apic.douyucdn.cn/upload/avanew/face/201804/222e863f14b1565bc91ede4b12165e4a_middle.jpg" alt="User Avatar">
-                            </div>
-                            <h3 class="widget-user-username">晚上好，星期三</h3>
-                            <h5 class="widget-user-desc">小缘</h5>
+                        <div class="widget-user-header bg-yellow" id="onlineInfo-head">
+
                         </div>
                         <div class="box-footer no-padding">
-                            <ul class="nav nav-stacked">
-                                <li><a href="#">开播状态 <span class="pull-right badge bg-red">关播</span></a></li>
-                                <li><a href="#">上次开播时间 <span class="pull-right badge bg-aqua">2018-09-12 00:33:42</span></a>
-                                </li>
-                                <li><a href="#">上次下播时间 <span
-                                        class="pull-right badge bg-green">2018-09-12 15:33:42</span></a></li>
-                                <li><a href="#">直播时长 <span class="pull-right badge bg-green">15小时38分</span></a></li>
-                                <li><a href="#">本月时长 <span class="pull-right badge bg-gray">61小时</span></a></li>
+                            <ul class="nav nav-stacked" id="onlineInfo-body">
+
                             </ul>
                         </div>
                     </div>
@@ -127,13 +108,17 @@
 
                         <div class="box-tools pull-right">
                             <a class="dropdown">
-                                <a class="dropdown-toggle" id="dropdown-bullet" data-toggle="dropdown" href="javascript:void(0);" aria-expanded="false">
+                                <a class="dropdown-toggle" id="dropdown-bullet" data-toggle="dropdown"
+                                   href="javascript:void(0);" aria-expanded="false">
                                     今天 <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li role="presentation"><a class="dropdown-child_bullet" data-value="today" role="menuitem" tabindex="-1">今天</a></li>
-                                    <li role="presentation"><a class="dropdown-child_bullet" data-value="yesterday" role="menuitem" tabindex="-1">昨天</a></li>
-                                    <li role="presentation"><a class="dropdown-child_bullet" data-value="currMonth" role="menuitem" tabindex="-1">本月</a></li>
+                                    <li role="presentation"><a class="dropdown-child_bullet" data-value="today"
+                                                               role="menuitem" tabindex="-1">今天</a></li>
+                                    <li role="presentation"><a class="dropdown-child_bullet" data-value="yesterday"
+                                                               role="menuitem" tabindex="-1">昨天</a></li>
+                                    <li role="presentation"><a class="dropdown-child_bullet" data-value="currMonth"
+                                                               role="menuitem" tabindex="-1">本月</a></li>
                                 </ul>
                             </a>
                         </div>
@@ -143,7 +128,7 @@
 
                         </ul>
                         <div class="box-footer text-center">
-                            <a href="query_bullet.html" class="uppercase">弹幕查询</a>
+                            <a href="#" class="uppercase">弹幕查询</a>
                         </div>
                     </div>
                 </div>
@@ -172,13 +157,17 @@
                         <h3 class="box-title">禁言列表</h3>
                         <div class="box-tools pull-right">
                             <a class="dropdown">
-                                <a class="dropdown-toggle" id="dropdown-shutup" data-value="today" data-toggle="dropdown" href="#" aria-expanded="false">
+                                <a class="dropdown-toggle" id="dropdown-shutup" data-value="today"
+                                   data-toggle="dropdown" href="#" aria-expanded="false">
                                     今天 <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li role="presentation"><a class="dropdown-child_shutup" role="menuitem" data-value="today" tabindex="-1">今天</a></li>
-                                    <li role="presentation"><a class="dropdown-child_shutup" role="menuitem" data-value="yesterday" tabindex="-1">昨天</a></li>
-                                    <li role="presentation"><a class="dropdown-child_shutup" role="menuitem" data-value="currMonth" tabindex="-1">本月</a></li>
+                                    <li role="presentation"><a class="dropdown-child_shutup" role="menuitem"
+                                                               data-value="today" tabindex="-1">今天</a></li>
+                                    <li role="presentation"><a class="dropdown-child_shutup" role="menuitem"
+                                                               data-value="yesterday" tabindex="-1">昨天</a></li>
+                                    <li role="presentation"><a class="dropdown-child_shutup" role="menuitem"
+                                                               data-value="currMonth" tabindex="-1">本月</a></li>
                                 </ul>
                             </a>
                         </div>
@@ -204,7 +193,7 @@
                     </div>
 
                     <div class="box-footer text-center">
-                        <a href="query_shutup.html" class="uppercase">查看更多</a>
+                        <a href="#" class="uppercase">查看更多</a>
                     </div>
                 </div>
             </div>
@@ -233,32 +222,16 @@
                     弹幕记录
                 </h4>
             </div>
-            <div class="modal-body">
-                <ul class="nav nav-stacked">
-                    <li><a href="#">2018-09-13 16:49:35 [196][Lv:17]<b style="color: red">小缘赐名的小嗯</b>：dmwlp</a></li>
-                    <li><a href="#">Tasks</a></li>
-                    <li><a href="#">Completed Projects</a></li>
-                    <li><a href="#">Followers</a></li>
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#">Tasks</a></li>
-                    <li><a href="#">Completed Projects</a></li>
-                    <li><a href="#">Followers</a></li>
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#">Tasks</a></li>
+            <div class="modal-body" data-value="">
+                <ul class="nav nav-stacked" id="modal-body_ul">
+
                 </ul>
             </div>
             <div class="modal-footer">
-                <div class="pull-left">
-                    <span style="font-size:16px;"> &nbsp; 第1/5页 </span>
-                    <span> 共2条记录</span>
-                </div>
-                <ul class="pagination pagination-sm no-margin pull-right">
-                    <li><a href="#">上一页</a></li>
-                    <li><a href="#">下一页</a></li>
-                </ul>
+
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
+        </div>
+    </div>
 </div>
 
 

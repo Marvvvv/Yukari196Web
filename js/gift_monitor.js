@@ -14,7 +14,7 @@ $(function(){
     }
 
     if (window.WebSocket) {
-        socket = new WebSocket("ws:localhost:8888/websocket");
+        socket = new WebSocket("ws:103.45.9.132:8888/websocket");
 
         socket.onmessage = function (event) {
             var data = JSON.parse(event.data);
@@ -50,16 +50,15 @@ $(function(){
         }
 
         socket.onopen = function (event) {
-            /*var ta = document.getElementById("responseContent");
-            ta.value = "您当前的浏览器支持websocket\r\n";*/
+
         }
 
         socket.onclose = function (event) {
-            alert("服务器异常关闭!");
+            alert('服务器突然死亡（#-_-)┯━┯');
         }
 
     } else {
-        alert("无法连接至服务器，请更换浏览器尝试!");
+        alert('未能连接上服务器（#-_-)┯━┯');
     }
 
 })
@@ -68,7 +67,7 @@ $(function(){
 // 获取未结束的礼物信息，并添加至table中
 function getNotOverYetGift() {
     $.ajax({
-        url:'http://127.0.0.1:8080/giftRadio/getNotOverYetGiftInfo',
+        url:'http://103.45.9.132:8080/giftRadio/getNotOverYetGiftInfo',
         method:'GET',
         dataType:'JSON',
         success:function (rsps) {

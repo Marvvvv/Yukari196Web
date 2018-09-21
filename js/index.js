@@ -2,8 +2,8 @@ $(document).ready(function(){
 
     console.log("ready");
 
-    // 加载开播信息
-
+    // 加载开关播信息
+    onlineInfoInit();
 
     // 默认加载今天弹幕量排行信息
     bulletRankInit("today");
@@ -15,10 +15,62 @@ $(document).ready(function(){
     shutUpListInit(1);
 });
 
+
+
+// 加载开关播信息
+function onlineInfoInit() {
+    $.ajax({
+        url: 'http://103.45.9.132:8080/achorInfo/baseInfo',
+        method: 'GET',
+        dataType: 'JSON',
+        success: function (rsps) {
+            if (rsps.code == 0) {
+                createOnlineInfo(rsps.data);
+            } else {onlineTime
+                $("#onlineInfo-body").html('<h3>服务器崩了,（/TДT)/</h3>');
+            }
+        }
+    });
+}
+
+
+// 创建开关播信息(html)
+function createOnlineInfo(data) {
+
+    var headHtml = '<div class="widget-user-image">\n' +
+        '    <img class="img-circle" src="'+ data.anchorImgUrl +'" alt="User Avatar">\n' +
+        '</div>\n' +
+        '<h3 class="widget-user-username">'+ data.roomTitle +'</h3>\n' +
+        '<h5 class="widget-user-desc">'+ data.anchorName +'</h5>';
+    $("#onlineInfo-head").append(headHtml);
+
+    var bodyHtml = '';
+    if (data.onlineStatus == 1) {
+        // 开播
+        bodyHtml = '<li><a href="#">开播状态 <span class="pull-right badge bg-red">开播</span></a></li>\n' +
+            '<li><a href="#">开播时间 <span class="pull-right badge bg-aqua">'+ data.onlineTime +'</span></a>\n' +
+            '</li>\n' +
+            '<li><a href="#">本月时长 <span class="pull-right badge bg-gray">'+ data.totalTimeLength +'</span></a></li>';
+    } else {
+        // 关播
+        bodyHtml = '<li><a href="#">开播状态 <span class="pull-right badge bg-red">关播</span></a></li>\n' +
+            '<li><a href="#">上次开播时间 <span class="pull-right badge bg-aqua">'+ data.onlineTime +'</span></a>\n' +
+            '</li>\n' +
+            '<li><a href="#">上次下播时间 <span\n' +
+            '        class="pull-right badge bg-green">'+ data.offlineTime +'</span></a></li>\n' +
+            '<li><a href="#">直播时长 <span class="pull-right badge bg-green">'+ data.onlineLength +'</span></a></li>\n' +
+            '<li><a href="#">本月时长 <span class="pull-right badge bg-gray">'+ data.totalTimeLength +'</span></a></li>';
+    }
+    $("#onlineInfo-body").append(bodyHtml);
+}
+
+
+
+
 // 获取弹幕排行信息
 function bulletRankInit(timeRange) {
     $.ajax({
-        url:'http://127.0.0.1:8080/bullet/countRank',
+        url:'http://103.45.9.132:8080/bullet/countRank',
         method:'GET',
         dataType:'JSON',
         data:{timeRange:timeRange},
@@ -26,7 +78,7 @@ function bulletRankInit(timeRange) {
             if (rsps.code == 0) {
                 createBulletRank(rsps.data);
             } else {
-                alert(rsps.msg);
+                $("#bulletRank").html('<h3>服务器崩了,（/TДT)/</h3>');
             }
         }
     });
@@ -61,7 +113,7 @@ $(".dropdown-child_bullet").click(function () {
 
 function giftRadioInit() {
     $.ajax({
-        url:'http://127.0.0.1:8080/giftRadio/getNotOverYetGiftInfo',
+        url:'http://103.45.9.132:8080/giftRadio/getNotOverYetGiftInfo',
         method:'GET',
         dataType:'JSON',
         success:function (rsps) {
@@ -77,7 +129,7 @@ function giftRadioInit() {
 function createGiftRadio(arr) {
     var giftSrc = "https://staticlive.douyucdn.cn/storage/webpic_resources/upload/dygift/1707/86d2b8b0084c7cc60311779a79b76b0b.gif";
     if (arr.length == 0) {
-        $("#gift_radio").html('<li style="text-align: center"><h3>暂时没有新的监控信息，点击查看更多实时监控宝箱!</h3></li>');
+        $("#gift_radio").html('<li style="text-align: center"><h3>暂时没有新的宝箱信息,点击下面链接查看实时监控!</h3></li>');
         return;
     }
     for (let i = 0; i < arr.length; i++) {
@@ -127,7 +179,7 @@ function shutUpListInit(page) {
 
     var timeRange = $("#dropdown-shutup").attr("data-value");
     $.ajax({
-        url:'http://127.0.0.1:8080/shutup/byRange',
+        url:'http://103.45.9.132:8080/shutup/byRange',
         method:'GET',
         dataType:'JSON',
         data:{timeRange:timeRange,page:page},
@@ -135,7 +187,7 @@ function shutUpListInit(page) {
             if (rsps.code == 0) {
                 createShutupList(rsps.data);
             } else {
-                alert(rsps.msg);
+                $("#shutup-page").html('<h3>服务器崩了,（/TДT)/</h3>');
             }
         }
     });
@@ -153,10 +205,10 @@ function createShutupList(data) {
     for (let i = 0; i < list.length; i++) {
         var obj = list[i];
         tbodyElement += '<tr>\n' +
-            '<td>'+ obj.date +'</td>\n' +
-            '<td>'+ obj.end_time +'</td>\n' +
-            '<td>'+ obj.shutUp_name +'</td>\n' +
-            '<td><span class="badge bg-red query_bullet" onclick="modalInit('+ obj.shutUp_id +');">看ta的弹幕</span></td>\n' +
+            '<td>'+ subTime(obj.date) +'</td>\n' +
+            '<td>'+ subTime(obj.end_time) +'</td>\n' +
+            '<td><a href="https://yuba.douyu.com/user/main/'+ obj.shutUp_id +'" target="_blank">'+ obj.shutUp_name +'</a></td>\n' +
+            '<td><span class="badge bg-red query_bullet" onclick="querryBulletHistory('+ obj.shutUp_id +',\''+ subTime(obj.date) +'\',1);">看ta的弹幕</span></td>\n' +
             '</tr>';
     }
     if (tbodyElement == "") {
@@ -174,7 +226,6 @@ function createShutupList(data) {
         '    <li><a href="javascript:shutUpListInit('+ nextPage +');">下一页</a></li>\n' +
         '</ul>';
     $("#shutup-page").html(pageElement);
-
 }
 
 
@@ -206,7 +257,63 @@ function initCountDown(e,time) {
 }
 
 
-function modalInit(uid) {
+function querryBulletHistory(uid,shutUpTime, page) {
+    if (page == 0) {
+        return;
+    }
+
     $('#shutupModal').modal('show');
+    $(".modal-body").attr("data-values",uid);
+    $.ajax({
+        url:'http://103.45.9.132:8080/bullet/getByUid',
+        method:'GET',
+        dataType:'JSON',
+        data:{uid:uid,shutUpTime:shutUpTime,page:page},
+        success:function (rsps) {
+            if (rsps.code == 0) {
+                createBulletHistory(rsps.data,shutUpTime);
+            } else {
+                $(".modal-footer").html('<h3>服务器崩了,（/TДT)/</h3>');
+            }
+        }
+    });
+}
+
+
+function createBulletHistory(data,shutUpTime) {
+    $(".modal-footer").empty();
+    $("#modal-body_ul").empty();
+    var uid = $(".modal-body").attr("data-values");
+
+    // 生成page信息
+    var prePage = data.prePage;
+    var nextPage = data.nextPage;
+    var pageElement = '<div class="pull-left">\n' +
+        '    <span style="font-size:16px;"> &nbsp; 第'+ data.pageNum +'/'+ data.pages +'页 </span>\n' +
+        '    <span> 共'+ data.total +'条记录</span>\n' +
+        '</div>\n' +
+        '<ul class="pagination pagination-sm no-margin pull-right">\n' +
+        '    <li><a href="javascript:querryBulletHistory('+ uid +',\''+ shutUpTime + '\','+ prePage +');">上一页</a></li>\n' +
+        '    <li><a href="javascript:querryBulletHistory('+ uid +',\''+ shutUpTime + '\','+ nextPage +');">下一页</a></li>\n' +
+        '</ul>';
+    $(".modal-footer").html(pageElement);
+
+
+    // 生成body信息
+    var tbodyElement = "";
+    var list = data.list;
+    for (let i = 0; i < list.length; i++) {
+        var obj = list[i];
+        tbodyElement += '<li><p>'+ subTime(obj.date) +' &nbsp;&nbsp;<b style="color: pink">'+ obj.uname +'</b>：'+ obj.content +'</p></li>';
+    }
+    if (tbodyElement == "") {
+        tbodyElement = '<div style="text-align: center"><h3>(=・ω・=)突然死亡...</h3></div>';
+    }
+    $("#modal-body_ul").html(tbodyElement);
+}
+
+
+function subTime (date) {
+    return date.substring(0,date.indexOf(".0"));
 }
 
